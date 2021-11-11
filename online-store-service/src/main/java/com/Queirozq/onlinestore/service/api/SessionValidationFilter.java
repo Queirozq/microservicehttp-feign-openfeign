@@ -10,6 +10,8 @@ import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 @Component
 @RequiredArgsConstructor
@@ -26,7 +28,9 @@ public class SessionValidationFilter implements Filter {
         if (sessionIdHeader == null) {
             httpServletResponse.sendError(HttpStatus.FORBIDDEN.value());
         } else {
-            UserSessionValidatorResponse userSessionValidatorResponse = userSessionClient.validateSession(sessionIdHeader);
+            Map<String, Object> queryMap = new HashMap<>();
+            queryMap.put("sessionId", sessionIdHeader);
+            UserSessionValidatorResponse userSessionValidatorResponse = userSessionClient.validateSession(queryMap);
             if (!userSessionValidatorResponse.isValid()) {
                 httpServletResponse.sendError(HttpStatus.FORBIDDEN.value());
             } else {

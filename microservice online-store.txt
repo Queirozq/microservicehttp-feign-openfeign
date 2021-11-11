@@ -4,5 +4,12 @@ no user-session-service que é pra validar a sessão dos meus microserviços, fi
 no OnlineService pra eu me comunicar com meu user-session-service botei as dependecy feign core/feign slf4j e feign jackson, fiz a interface UserSessionClient onde ele vai chamar o endpoint do meu user-session-service com o uuid como parametro para ver se é o mesmo do que tá lá no user-session-service para validar, no feign configuration botei um bean da minha interface onde ele vai encodar e decodar JSON e o restante do endpoint do meu UserSessionService, e no validationFilter ele vai testar se o sessionId vindo no header é o mesmo do meu microserviço UserSessionClient, se for nulo ou não for igual/valido ele da forbidden, se não eu consigo acessar meu endpoint.
 
 
+dependency feign jackson = pra encodar e decodar o json
+dependency feign slf4j = pegar a lib do logging
+
+
+-pra ligar o logging do feign client
+  no FeignConfiguration adicionar .logLevel(Logger.Level.FULL) e o logger um new Sl4fjLogger
+  e logging.level.feign=DEBUG no application.properties
 
 
