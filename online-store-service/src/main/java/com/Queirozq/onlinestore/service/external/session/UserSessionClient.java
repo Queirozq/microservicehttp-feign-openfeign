@@ -11,12 +11,10 @@ import java.util.UUID;
 public interface UserSessionClient {
 
     @RequestLine("GET /user-sessions/validate")
-    UserSessionValidatorResponse validateSession(@QueryMap Map<String, Object> queryMap);
+    UserSessionValidatorResponse validateSession(@QueryMap ValidateSessionRequest validateSessionRequest);
 
 
     default UserSessionValidatorResponse validateSession(UUID sessionId) {
-        Map<String, Object> queryMap = new HashMap<>();
-        queryMap.put("sessionId", sessionId.toString());
-        return validateSession(queryMap);
+        return validateSession(new ValidateSessionRequest(sessionId.toString()));
     }
 }

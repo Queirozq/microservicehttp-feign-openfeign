@@ -4,7 +4,6 @@ import lombok.Data;
 
 @Data
 public class UserSessionValidatorResponse {
-
     private boolean isValid;
     private String sessionId;
 }
