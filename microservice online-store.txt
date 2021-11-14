@@ -6,10 +6,38 @@ no OnlineService pra eu me comunicar com meu user-session-service botei as depen
 
 dependency feign jackson = pra encodar e decodar o json
 dependency feign slf4j = pegar a lib do logging
-
+-------------------------------------------------------------------------------------------------------
 
 -pra ligar o logging do feign client
   no FeignConfiguration adicionar .logLevel(Logger.Level.FULL) e o logger um new Sl4fjLogger
   e logging.level.feign=DEBUG no application.properties
+-------------------------------------------------------------------------------------------------------
+@QueryMap annotation e como usar com feign client
+ 
+  se a gente quiser passar mais de um argumento na validação a gente usa a annotation@QueryMap 
+  e passa um map de String, Object, e no nosso filter a gente cria um map também e bota o sessionId
+
+
+
+
+como escala um cara 
+
+
+sistema monolitico
+tecnica escalabilidade vertical  escalando memoria, escalando cpu aumentando processamento da maquina
+quando para uma função todo o resto para
+
+
+
+sistema microserviço
+escalabilidade horizontal
+
+
+microserviço
+tecnica escalabilidade horizontal principio de responsabilidade unica facilidade para manunteção  porem complexidade na rede para sicronizar tudo
+
+ausencia de estado
+
+
 
 
