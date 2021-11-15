@@ -1,17 +1,23 @@
 package com.Queirozq.onlinestore.service.external.session;
 
+import feign.HeaderMap;
 import feign.QueryMap;
 import feign.RequestLine;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 public interface UserSessionClient {
 
     @RequestLine("GET /user-sessions/validate")
-    UserSessionValidatorResponse validateSession(@QueryMap ValidateSessionRequest validateSessionRequest);
+    UserSessionValidatorResponse validateSession(@QueryMap ValidateSessionRequest validateSessionRequest,
+                                                 @HeaderMap Map<String, Object> headerMap);
 
 
     default UserSessionValidatorResponse validateSession(UUID sessionId) {
-        return validateSession(new ValidateSessionRequest(sessionId.toString()));
+        Map<String, Object> headerMap = new HashMap<>();
+        headerMap.put("X-Source", "validateSession(UUID)");
+        return validateSession(new ValidateSessionRequest(sessionId.toString()), headerMap);
     }
 }
