@@ -14,8 +14,40 @@ dependency feign slf4j = pegar a lib do logging
 -------------------------------------------------------------------------------------------------------
 @QueryMap annotation e como usar com feign client
  
-  se a gente quiser passar mais de um argumento na validação a gente usa a annotation@QueryMap 
+  se a gente quiser passar mais de um argumento na validação a gente usa a annotation @QueryMap 
   e passa um map de String, Object, e no nosso filter a gente cria um map também e bota o sessionId
+-------------------------------------------------------------------------------------------------------
+Default method na interface UserSessionClient para enxugar e ajudar na manuntenção
+
+fiz um default method para ele ser chamado toda vez que eu usar a implementação da interface onde vai criar o map e retornar a primeira implementação que chama o endpoint do user-session-service pra fazer a validação.
+
+com isso meu filter ficou mais enxuto e eu crio agora um UUID e passo com fromString para o erro de formtação não cair no meu endpoint e sim no meu próprio filter.
+-------------------------------------------------------------------------------------------------------
+Usando POJOs para parametros da URL-
+
+ao invés de ter um map com os parâmetros a gente pode fazer um pojo pra os atributos do meu pojo serem os parametros da url, nesse caso criei uma classe com 1 atributo que seria o sessionId para ser o parâmetro com getter setter hashcode allargs const e noargs const
+
+e na interface no metodo do endpoint eu não recebo mais um map, e sim o pojo, e no default method eu retorno o metodo do endpoint recebendo uma instancia nova do meu pojo passando o sessionId
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
