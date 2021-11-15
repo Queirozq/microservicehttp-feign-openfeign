@@ -28,7 +28,15 @@ Usando POJOs para parametros da URL-
 ao invés de ter um map com os parâmetros a gente pode fazer um pojo pra os atributos do meu pojo serem os parametros da url, nesse caso criei uma classe com 1 atributo que seria o sessionId para ser o parâmetro com getter setter hashcode allargs const e noargs const
 
 e na interface no metodo do endpoint eu não recebo mais um map, e sim o pojo, e no default method eu retorno o metodo do endpoint recebendo uma instancia nova do meu pojo passando o sessionId
+-------------------------------------------------------------------------------------------------------
+@Headers with feign client - colocando dados JSON para criar novos produtos no sistema
 
+
+Primeiro criei o inventory-service api onde vai ficar os produtos, stocks de produtos tudo em um banco de dado em memória que é um map no restcontroller, de resto é só olhar o código que da pra entender, tem o map, um produto sendo colocado no map, o endpoint post de /products retornando a resposta e recebendo o request. na classe de ProductRequest não tem ID pq quem faz o id é a api e não quem vai inserir no banco de dados.
+
+
+Na minha api online-store-service eu fiz a interface que vai criar os produtos chamando a api do inventory, fiz o createProduct response e request, usando a annotation @Headers
+no feignConfiguration botei o bean da minha interface e a url, depois criei 2 pojos para receber a request e retornar a response no controller
 
 
 
