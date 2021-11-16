@@ -1,5 +1,5 @@
 package com.Queirozq.onlinestore.service.external.inventory;
-
+import com.Queirozq.onlinestore.service.external.BaseClient;
 import com.Queirozq.onlinestore.service.external.configuration.OffsetDateTimeToMillisExpander;
 import feign.Headers;
 import feign.Param;
@@ -7,7 +7,7 @@ import feign.RequestLine;
 
 import java.time.OffsetDateTime;
 
-public interface InventoryServiceClient {
+public interface InventoryServiceClient extends BaseClient {
     @RequestLine("POST /products")
     @Headers("Content-Type: application/json")
     CreateProductResponse createProduct(CreateProductRequest request);

@@ -1,5 +1,6 @@
 package com.Queirozq.onlinestore.service.external.session;
 
+import com.Queirozq.onlinestore.service.external.BaseClient;
 import feign.HeaderMap;
 import feign.QueryMap;
 import feign.RequestLine;
@@ -8,7 +9,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-public interface UserSessionClient {
+public interface UserSessionClient extends BaseClient {
 
     @RequestLine("GET /user-sessions/validate")
     UserSessionValidatorResponse validateSession(@QueryMap ValidateSessionRequest validateSessionRequest,

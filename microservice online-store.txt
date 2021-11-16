@@ -37,6 +37,17 @@ Primeiro criei o inventory-service api onde vai ficar os produtos, stocks de pro
 
 Na minha api online-store-service eu fiz a interface que vai criar os produtos chamando a api do inventory, fiz o createProduct response e request, usando a annotation @Headers
 no feignConfiguration botei o bean da minha interface e a url, depois criei 2 pojos para receber a request e retornar a response no controller
+-------------------------------------------------------------------------------------------------------
+Usando expander do @Param para  @PathVariables, RequestParam com feign client
+
+Pra aceitar uma data OffsetDateTime usando expander primeiro precisamos transformar a data em milisegundos no invetoryservice api, usando um formatter e pro spring identificar, criar uma classe de configuração e registrar o novo formato, depois é só passar o parametro OffsetDateTime no endpoint que a gente quer testar, no caso do projeto no buy.
+
+E no online-service api a gente botou na interface do feignClient o novo endpoint, e usou o expander do feignClient no parametro passando uma classe para transformar OffSet em expander
+
+-------------------------------------------------------------------------------------------------------
+Header dinamicos com FeignClient
+
+pra passar header parametros dinamicos usando feign é só botar a annotation @HeaderMap e colocar no map os parametros que você quiser passar no header
 
 
 
