@@ -31,6 +31,7 @@ public class FeignConfiguration {
                 .logger(new Slf4jLogger())
                 .encoder(new JacksonEncoder())
                 .decoder(new JacksonDecoder())
+                .errorDecoder(new InventoryServiceErrorDecoder())
                 .requestInterceptor(new SourceRequestInterceptor())
                 .target(InventoryServiceClient.class, "http://localhost:8081");
     }
