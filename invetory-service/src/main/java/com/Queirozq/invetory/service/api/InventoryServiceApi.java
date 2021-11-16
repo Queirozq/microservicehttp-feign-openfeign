@@ -1,7 +1,9 @@
 package com.Queirozq.invetory.service.api;
 
 
+import com.Queirozq.invetory.service.api.exception.ProductCreationFailedException;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.OffsetDateTime;
@@ -21,6 +23,9 @@ public class InventoryServiceApi {
     @PostMapping("/products")
     public CreateProductResponse createProduct(@RequestBody CreateProductRequest request){
         String productName = request.getName();
+        if(!StringUtils.hasText(productName)){
+            throw new ProductCreationFailedException("Product name cannot be empty");
+        }
         int initialStock = request.getInitialStock();
         UUID productId = UUID.randomUUID();
         Product product = new Product(productId, productName, initialStock, null);
