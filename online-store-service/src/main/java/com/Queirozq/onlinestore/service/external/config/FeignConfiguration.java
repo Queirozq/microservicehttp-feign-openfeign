@@ -1,4 +1,4 @@
-package com.Queirozq.onlinestore.service.external.configuration;
+package com.Queirozq.onlinestore.service.external.config;
 
 import com.Queirozq.onlinestore.service.external.inventory.InventoryServiceClient;
 import com.Queirozq.onlinestore.service.external.session.UserSessionClient;
@@ -20,6 +20,7 @@ public class FeignConfiguration {
                 .logger(new Slf4jLogger())
                 .encoder(new JacksonEncoder())
                 .decoder(new JacksonDecoder())
+                .requestInterceptor(new SourceRequestInterceptor())
                 .target(UserSessionClient.class, "http://localhost:8082");
     }
 
@@ -30,6 +31,7 @@ public class FeignConfiguration {
                 .logger(new Slf4jLogger())
                 .encoder(new JacksonEncoder())
                 .decoder(new JacksonDecoder())
+                .requestInterceptor(new SourceRequestInterceptor())
                 .target(InventoryServiceClient.class, "http://localhost:8081");
     }
 }

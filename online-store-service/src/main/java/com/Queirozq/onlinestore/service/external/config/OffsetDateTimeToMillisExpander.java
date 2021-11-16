@@ -1,4 +1,4 @@
-package com.Queirozq.onlinestore.service.external.configuration;
+package com.Queirozq.onlinestore.service.external.config;
 
 import feign.Param;
 

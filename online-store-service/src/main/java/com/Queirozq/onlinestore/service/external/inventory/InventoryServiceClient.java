@@ -1,6 +1,6 @@
 package com.Queirozq.onlinestore.service.external.inventory;
 import com.Queirozq.onlinestore.service.external.BaseClient;
-import com.Queirozq.onlinestore.service.external.configuration.OffsetDateTimeToMillisExpander;
+import com.Queirozq.onlinestore.service.external.config.OffsetDateTimeToMillisExpander;
 import feign.Headers;
 import feign.Param;
 import feign.RequestLine;

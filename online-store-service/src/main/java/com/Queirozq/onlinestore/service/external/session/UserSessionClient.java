@@ -18,7 +18,6 @@ public interface UserSessionClient extends BaseClient {
 
     default UserSessionValidatorResponse validateSession(UUID sessionId) {
         Map<String, Object> headerMap = new HashMap<>();
-        headerMap.put("X-Source", "validateSession(UUID)");
         return validateSession(new ValidateSessionRequest(sessionId.toString()), headerMap);
     }
 }
