@@ -2,13 +2,14 @@ package com.Queirozq.onlinestore.service.external.config;
 
 import com.Queirozq.onlinestore.service.external.inventory.InventoryServiceClient;
 import com.Queirozq.onlinestore.service.external.session.UserSessionClient;
-import com.codahale.metrics.SharedMetricRegistries;
-import com.codahale.metrics.jmx.JmxReporter;
 import feign.*;
 import feign.jackson.JacksonDecoder;
 import feign.jackson.JacksonEncoder;
-import feign.metrics4.Metrics4Capability;
+import feign.micrometer.MicrometerCapability;
 import feign.slf4j.Slf4jLogger;
+import io.micrometer.core.instrument.Clock;
+import io.micrometer.jmx.JmxConfig;
+import io.micrometer.jmx.JmxMeterRegistry;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -30,11 +31,8 @@ public class FeignConfiguration {
 
     @Bean
     public InventoryServiceClient inventoryServiceClient(){
-        JmxReporter reporter = JmxReporter.forRegistry(SharedMetricRegistries.getOrCreate("feign")).build();
-        reporter.start();
-
         return Feign.builder()
-                .addCapability(new Metrics4Capability())
+                .addCapability(new MicrometerCapability(new JmxMeterRegistry(JmxConfig.DEFAULT, Clock.SYSTEM)))
                 .logLevel(Logger.Level.FULL)
                 .logger(new Slf4jLogger())
                 .encoder(new JacksonEncoder())
