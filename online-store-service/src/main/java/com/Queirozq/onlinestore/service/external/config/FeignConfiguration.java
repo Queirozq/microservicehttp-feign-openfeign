@@ -24,6 +24,7 @@ public class FeignConfiguration {
                 .logger(new Slf4jLogger())
                 .encoder(new JacksonEncoder())
                 .decoder(new JacksonDecoder())
+                .options(new Request.Options(10, TimeUnit.SECONDS, 10, TimeUnit.SECONDS, true))
                 .requestInterceptor(new SourceRequestInterceptor())
                 .target(UserSessionClient.class, "http://localhost:8082");
     }
@@ -37,7 +38,6 @@ public class FeignConfiguration {
                 .decoder(new JacksonDecoder())
                 .errorDecoder(new InventoryServiceErrorDecoder())
                 .requestInterceptor(new SourceRequestInterceptor())
-                .options(new Request.Options(10, TimeUnit.SECONDS, 10, TimeUnit.SECONDS, true))
                 .target(InventoryServiceClient.class, "http://localhost:8081");
     }
 }
