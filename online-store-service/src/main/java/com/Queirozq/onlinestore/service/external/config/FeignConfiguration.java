@@ -2,10 +2,7 @@ package com.Queirozq.onlinestore.service.external.config;
 
 import com.Queirozq.onlinestore.service.external.inventory.InventoryServiceClient;
 import com.Queirozq.onlinestore.service.external.session.UserSessionClient;
-import feign.Feign;
-import feign.Logger;
-import feign.Request;
-import feign.Retryer;
+import feign.*;
 import feign.jackson.JacksonDecoder;
 import feign.jackson.JacksonEncoder;
 import feign.slf4j.Slf4jLogger;
@@ -19,12 +16,11 @@ public class FeignConfiguration {
 
     @Bean
     public UserSessionClient userSessionClient(){
-        return Feign.builder()
+        return AsyncFeign.asyncBuilder()
                 .logLevel(Logger.Level.FULL)
                 .logger(new Slf4jLogger())
                 .encoder(new JacksonEncoder())
                 .decoder(new JacksonDecoder())
-                .options(new Request.Options(10, TimeUnit.SECONDS, 10, TimeUnit.SECONDS, true))
                 .requestInterceptor(new SourceRequestInterceptor())
                 .target(UserSessionClient.class, "http://localhost:8082");
     }
@@ -37,6 +33,7 @@ public class FeignConfiguration {
                 .encoder(new JacksonEncoder())
                 .decoder(new JacksonDecoder())
                 .errorDecoder(new InventoryServiceErrorDecoder())
+                .retryer(new Retryer.Default(1000, 5000, 2))
                 .requestInterceptor(new SourceRequestInterceptor())
                 .target(InventoryServiceClient.class, "http://localhost:8081");
     }
