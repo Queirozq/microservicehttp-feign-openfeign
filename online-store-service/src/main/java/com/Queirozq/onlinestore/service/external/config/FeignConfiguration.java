@@ -4,12 +4,15 @@ import com.Queirozq.onlinestore.service.external.inventory.InventoryServiceClien
 import com.Queirozq.onlinestore.service.external.session.UserSessionClient;
 import feign.Feign;
 import feign.Logger;
+import feign.Request;
 import feign.Retryer;
 import feign.jackson.JacksonDecoder;
 import feign.jackson.JacksonEncoder;
 import feign.slf4j.Slf4jLogger;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
+import java.util.concurrent.TimeUnit;
 
 @Configuration
 public class FeignConfiguration {
@@ -33,8 +36,8 @@ public class FeignConfiguration {
                 .encoder(new JacksonEncoder())
                 .decoder(new JacksonDecoder())
                 .errorDecoder(new InventoryServiceErrorDecoder())
-                .retryer(new Retryer.Default(1000, 5000, 2))
                 .requestInterceptor(new SourceRequestInterceptor())
+                .options(new Request.Options(10, TimeUnit.SECONDS, 10, TimeUnit.SECONDS, true))
                 .target(InventoryServiceClient.class, "http://localhost:8081");
     }
 }
