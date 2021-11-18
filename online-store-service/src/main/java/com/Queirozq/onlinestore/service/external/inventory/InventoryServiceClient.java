@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.time.OffsetDateTime;
 
-@FeignClient(url = "http:localhost:8081")
+@FeignClient(name = "inventory-service", url = "http://localhost:8081")
 public interface InventoryServiceClient extends BaseClient {
     @PostMapping(value = "/products", produces = MediaType.APPLICATION_JSON_VALUE)
     CreateProductResponse createProduct(CreateProductRequest request);
