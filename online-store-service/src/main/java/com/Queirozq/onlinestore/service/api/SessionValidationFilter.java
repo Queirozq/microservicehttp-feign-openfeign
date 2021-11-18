@@ -30,14 +30,7 @@ public class SessionValidationFilter implements Filter {
             httpServletResponse.sendError(HttpStatus.FORBIDDEN.value());
         } else {
             UUID sessionId = UUID.fromString(sessionIdHeader);
-            CompletableFuture<UserSessionValidatorResponse> responseFuture = userSessionClient.validateSession(sessionId);
-            // Coisas doidas aqui
-            UserSessionValidatorResponse userSessionValidatorResponse = null;
-            try {
-                userSessionValidatorResponse = responseFuture.get();
-            } catch (Exception e) {
-                throw new RuntimeException("Exception while validating the session", e);
-            }
+            UserSessionValidatorResponse userSessionValidatorResponse = userSessionClient.validateSession(sessionId);
             if (!userSessionValidatorResponse.isValid()) {
                 httpServletResponse.sendError(HttpStatus.FORBIDDEN.value());
             } else {

@@ -24,25 +24,4 @@ public class FeignConfiguration implements FeignFormatterRegistrar {
     public Logger.Level loggerLevel(){
         return Logger.Level.FULL;
     }
-
-    @Bean
-    public Targeter feignTargeter(){
-            return new Targeter() {
-                @Override
-                public <T> T target(FeignClientFactoryBean factory, Feign.Builder builder, FeignContext context, Target.HardCodedTarget<T> target) {
-                    String contextId = factory.getContextId();
-                    AsyncFeign.AsyncBuilder<Object> asyncBuilder = AsyncFeign.asyncBuilder();
-                    asyncBuilder.decoder(context.getInstance(contextId, Decoder.class));
-                    asyncBuilder.errorDecoder(context.getInstance(contextId, ErrorDecoder.class));
-                    if(factory.isDecode404()){
-                        asyncBuilder.decode404();
-                    }
-                    ReflectionUtils.doWithFields(AsyncFeign.AsyncBuilder.class, field -> {
-                        ReflectionUtils.makeAccessible(field);
-                        ReflectionUtils.setField(field, asyncBuilder, builder);
-                    }, field -> field.getName().equalsIgnoreCase("builder"));
-                    return asyncBuilder.target(target);
-                }
-            };
-    }
 }

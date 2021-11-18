@@ -15,11 +15,11 @@ import java.util.concurrent.CompletableFuture;
 public interface UserSessionClient extends BaseClient {
 
     @GetMapping("/user-sessions/validate")
-    CompletableFuture<UserSessionValidatorResponse> validateSession(@RequestParam Map<String, Object> queryMap,
+    UserSessionValidatorResponse validateSession(@RequestParam Map<String, Object> queryMap,
                                       @RequestHeader Map<String, Object> headerMap);
 
 
-    default CompletableFuture<UserSessionValidatorResponse> validateSession(UUID sessionId) {
+    default UserSessionValidatorResponse validateSession(UUID sessionId) {
         Map<String, Object> queryMap = new HashMap<>();
         queryMap.put("sessionId", sessionId.toString());
         Map<String, Object> headerMap = new HashMap<>();
