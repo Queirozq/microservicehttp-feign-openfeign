@@ -6,10 +6,12 @@ import feign.Response;
 import feign.codec.ErrorDecoder;
 import lombok.Data;
 import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 
+@Component
 public class InventoryServiceErrorDecoder implements ErrorDecoder {
     private ObjectMapper objectMapper = new ObjectMapper();
     private ErrorDecoder.Default defaultDecoder = new Default();

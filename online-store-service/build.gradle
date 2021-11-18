@@ -18,17 +18,23 @@ repositories {
 	mavenCentral()
 }
 
+ext {
+	set('springCloudVersion', "2020.0.4")
+}
+
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-actuator'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
-	implementation 'io.github.openfeign:feign-core:10.12'
-	implementation 'io.github.openfeign:feign-slf4j:10.12'
-	implementation 'io.github.openfeign:feign-jackson:10.12'
-	implementation 'io.github.openfeign:feign-micrometer:10.12'
-	implementation 'io.micrometer:micrometer-registry-jmx:1.7.4'
+	implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
+
+dependencyManagement{
+	imports{
+		mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+	}
 }
 
 test {

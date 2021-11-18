@@ -1,19 +1,20 @@
 package com.Queirozq.onlinestore.service.external.inventory;
 import com.Queirozq.onlinestore.service.external.BaseClient;
-import com.Queirozq.onlinestore.service.external.config.OffsetDateTimeToMillisExpander;
-import feign.Headers;
-import feign.Param;
-import feign.RequestLine;
+import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.time.OffsetDateTime;
 
+@FeignClient(url = "http:localhost:8081")
 public interface InventoryServiceClient extends BaseClient {
-    @RequestLine("POST /products")
-    @Headers("Content-Type: application/json")
+    @PostMapping(value = "/products", produces = MediaType.APPLICATION_JSON_VALUE)
     CreateProductResponse createProduct(CreateProductRequest request);
 
-    @RequestLine("POST /products/{productId}/buy?amount={amount}&boughtAt={boughtAt}")
-    void buy(@Param("productId") String productId,
-             @Param("amount") int amount,
-             @Param(value = "boughtAt", expander = OffsetDateTimeToMillisExpander.class) OffsetDateTime boughtAt);
+    @PostMapping("/products/{productId}/buy?amount={amount}&boughtAt={boughtAt}")
+    void buy(@PathVariable("productId") String productId,
+             @RequestParam("amount") int amount,
+             @RequestParam(value = "boughtAt") OffsetDateTime boughtAt);
 }
