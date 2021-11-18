@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
-import java.util.concurrent.CompletableFuture;
 
 @FeignClient(name = "user-session-service", url = "http://localhost:8082")
 public interface UserSessionClient extends BaseClient {
