@@ -19,7 +19,8 @@ public class UserSessionController {
     }
 
     @GetMapping("/user-sessions/v2/validate")
-    public UserSessionValidatorResponse validateV2(@RequestParam("sessionId")UUID sessionId){
+    public UserSessionValidatorResponse validateV2(@RequestParam("sessionId")UUID sessionId) throws InterruptedException {
+        Thread.sleep(500);
         boolean isValid = UUID.fromString("ad8614c1-d3e9-4b62-971a-1e7b19345fcb").equals(sessionId);
         return UserSessionValidatorResponse.builder()
                 .sessionId(sessionId)

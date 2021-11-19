@@ -10,7 +10,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-@FeignClient(name = "user-session-service", fallbackFactory = UserSessionClientFallbackFactory.class)
+@FeignClient(name = "user-session-service")
 public interface UserSessionClient extends BaseClient {
 
     @GetMapping("/user-sessions/validate")
