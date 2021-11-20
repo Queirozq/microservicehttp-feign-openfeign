@@ -3,6 +3,7 @@ package com.Queirozq.onlinestore.service.external.config;
 import feign.Feign;
 import feign.Logger;
 import io.github.resilience4j.circuitbreaker.CircuitBreakerConfig;
+import io.github.resilience4j.timelimiter.TimeLimiterConfig;
 import org.springframework.cloud.circuitbreaker.resilience4j.Resilience4JCircuitBreakerFactory;
 import org.springframework.cloud.client.circuitbreaker.Customizer;
 import org.springframework.cloud.openfeign.CircuitBreakerNameResolver;
@@ -36,10 +37,11 @@ public class FeignConfiguration implements FeignFormatterRegistrar {
                 .waitDurationInOpenState(Duration.ofSeconds(5))
                 .permittedNumberOfCallsInHalfOpenState(5)
                 .build();
+        TimeLimiterConfig timeLimiterConfig = TimeLimiterConfig.custom().timeoutDuration(Duration.ofSeconds(5)).build();
         return resilience4JCircuitBreakerFactory -> resilience4JCircuitBreakerFactory.configure(builder ->
-                builder.circuitBreakerConfig(cbConfig), "UserSessionClient#validateSession(UUID)","UserSessionClient#validateSession(Map,Map)");
+                builder.circuitBreakerConfig(cbConfig).timeLimiterConfig(timeLimiterConfig), "UserSessionClient#validateSession(UUID)","UserSessionClient#validateSession(Map,Map)");
 
-    }
+    }   
 
     @Bean
     public CircuitBreakerNameResolver circuitBreakerNameResolver(){
