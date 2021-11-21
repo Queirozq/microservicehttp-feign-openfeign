@@ -36,12 +36,14 @@ public class FeignConfiguration implements FeignFormatterRegistrar {
                 .failureRateThreshold(20.0f)
                 .waitDurationInOpenState(Duration.ofSeconds(5))
                 .permittedNumberOfCallsInHalfOpenState(5)
+                .slowCallDurationThreshold(Duration.ofSeconds(2))
+                .slowCallRateThreshold(80.0f)
                 .build();
         TimeLimiterConfig timeLimiterConfig = TimeLimiterConfig.custom().timeoutDuration(Duration.ofSeconds(5)).build();
         return resilience4JCircuitBreakerFactory -> resilience4JCircuitBreakerFactory.configure(builder ->
-                builder.circuitBreakerConfig(cbConfig).timeLimiterConfig(timeLimiterConfig), "UserSessionClient#validateSession(UUID)","UserSessionClient#validateSession(Map,Map)");
+                builder.circuitBreakerConfig(cbConfig).timeLimiterConfig(timeLimiterConfig), "UserSessionClient#validateSession(UUID,Map)","UserSessionClient#validateSession(Map,Map)");
 
-    }   
+    }
 
     @Bean
     public CircuitBreakerNameResolver circuitBreakerNameResolver(){

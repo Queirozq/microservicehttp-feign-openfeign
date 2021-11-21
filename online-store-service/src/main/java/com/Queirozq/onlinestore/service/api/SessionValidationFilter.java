@@ -10,6 +10,8 @@ import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 @Component
@@ -27,8 +29,13 @@ public class SessionValidationFilter implements Filter {
         if (sessionIdHeader == null) {
             httpServletResponse.sendError(HttpStatus.FORBIDDEN.value());
         } else {
+            String sleepTime = httpServletRequest.getHeader("X-Sleep");
+            Map<String, Object> headerMap = new HashMap<>();
+            if(sleepTime != null){
+                headerMap.put("X-Sleep", sleepTime);
+            }
             UUID sessionId = UUID.fromString(sessionIdHeader);
-            UserSessionValidatorResponse userSessionValidatorResponse = userSessionClient.validateSession(sessionId);
+            UserSessionValidatorResponse userSessionValidatorResponse = userSessionClient.validateSession(sessionId, headerMap);
             if (!userSessionValidatorResponse.isValid()) {
                 httpServletResponse.sendError(HttpStatus.FORBIDDEN.value());
             } else {
