@@ -3,7 +3,6 @@ package com.Queirozq.onlinestore.service;
 import com.Queirozq.onlinestore.service.external.inventory.CreateProductRequest;
 import com.Queirozq.onlinestore.service.external.inventory.CreateProductResponse;
 import com.Queirozq.onlinestore.service.external.inventory.InventoryServiceClient;
-import com.github.tomakehurst.wiremock.client.ResponseDefinitionBuilder;
 import com.github.tomakehurst.wiremock.client.WireMock;
 import com.github.tomakehurst.wiremock.core.WireMockConfiguration;
 import com.github.tomakehurst.wiremock.junit5.WireMockExtension;
