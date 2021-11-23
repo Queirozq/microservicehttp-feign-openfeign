@@ -12,5 +12,5 @@ import java.util.UUID;
 public class CreateProductResponse {
     private UUID productId;
     private String name;
-    private int initialStock;
+    private int stock;
 }
